@@ -11,15 +11,15 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const deployMessage = async (data: FormData) => {
-  // const response = await fetch("http://localhost:8000/api/deploy", {
-  //   method: "POST",
-  //   headers: { "Content-Type": "application/json" },
-  //   body: JSON.stringify(data),
-  // });
-  // return response.json();
-
-  //return a fake success
-  return { message: data.message };
+  const response = await fetch(
+    `${import.meta.env.VITE_BACKEND_URL}/api/deploy`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    }
+  );
+  return response.json();
 };
 
 function App() {

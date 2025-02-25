@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const schema = z.object({
   message: z.string().min(1, "Message is required"),
@@ -9,6 +10,11 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 function App() {
+  const { loginWithRedirect, isAuthenticated } = useAuth0();
+  if (!isAuthenticated) {
+    return <button onClick={() => loginWithRedirect()}>Log In</button>;
+  }
+
   const {
     register,
     handleSubmit,
